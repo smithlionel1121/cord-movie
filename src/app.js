@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import * as breakpoints from "../src/breakpoints";
 
 import SideNavBar from "./components/sidenavbar";
 
@@ -9,12 +10,19 @@ import Discover from "./pages/discover";
 import "./css/app.css";
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { sidebarOpen: false };
+  }
+
   render() {
+    const { sidebarOpen } = this.state;
+
     return (
       <Router>
         <PageContainer>
-          <SideNavBar {...this.props} />
-          <ContentWrapper>
+          <SideNavBar isOpen={sidebarOpen} />
+          <ContentWrapper sidebarOpen={sidebarOpen}>
             <Switch>
               <Route path="/discover" component={Discover} {...this.props} />
             </Switch>
@@ -26,7 +34,20 @@ export default class App extends React.Component {
 }
 
 const ContentWrapper = styled.main`
-  padding-left: 280px;
+  padding-left: 260px;
+  transition: padding 250ms ease-in;
+
+  @media only screen and (max-width: ${breakpoints.mobile}) {
+    ${({ sidebarOpen }) =>
+      !sidebarOpen &&
+      css`
+        padding-left: 0px;
+      `}
+  }
+
+  @media only screen and (max-width: 576px) {
+    padding-left: 0px;
+  }
 `;
 
 const PageContainer = styled.main`

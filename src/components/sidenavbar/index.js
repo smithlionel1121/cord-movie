@@ -11,7 +11,7 @@ export default class SideNavBar extends React.Component {
   /* Write the necessary functions to show and hide the side bar on small devices */
 
   render() {
-    const { isOpen } = this.state;
+    const { isOpen } = this.props;
 
     return (
       <SideNavBarCont isOpen={isOpen}>
