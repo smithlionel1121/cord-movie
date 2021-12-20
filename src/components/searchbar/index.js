@@ -5,4 +5,51 @@ import * as colors from "../../colors";
 import SearchIcon from "../../images/search-icon-yellow.png";
 import CalendarIcon from "../../images/year-icon.png";
 
-export default class SearchBar extends React.Component {}
+const startYear = 1900;
+const currentYear = new Date().getFullYear();
+
+export default class SearchBar extends React.Component {
+  render() {
+    return (
+      <>
+        <SearchBarWrapper>
+          <InputBar type="search" />
+          <SearchBarIcon src={SearchIcon} />
+        </SearchBarWrapper>
+
+        <SearchBarWrapper>
+          <InputBar
+            type="number"
+            placeholder="Year of release"
+            min={startYear}
+            max={currentYear}
+          />
+          <SearchBarIcon src={CalendarIcon} />
+        </SearchBarWrapper>
+      </>
+    );
+  }
+}
+
+const SearchBarWrapper = styled.div`
+  position: relative;
+`;
+
+const InputBar = styled.input`
+  border-style: none;
+  border-bottom-style: solid;
+  border-color: ${colors.primaryColor};
+  width: 100%;
+  padding: 16px 0 16px 35px;
+  box-sizing: border-box;
+  outline: 0;
+  font-size: 1.17em;
+  font-weight: bold;
+`;
+
+const SearchBarIcon = styled.img.attrs({ draggable: false })`
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+`;
