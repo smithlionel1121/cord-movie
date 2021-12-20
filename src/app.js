@@ -37,7 +37,7 @@ const ContentWrapper = styled.main`
   padding-left: 260px;
   transition: padding 250ms ease-in;
 
-  @media only screen and (max-width: ${breakpoints.mobile}) {
+  @media only screen and (max-width: ${breakpoints.tablet}) {
     ${({ sidebarOpen }) =>
       !sidebarOpen &&
       css`
@@ -45,7 +45,7 @@ const ContentWrapper = styled.main`
       `}
   }
 
-  @media only screen and (max-width: 576px) {
+  @media only screen and (max-width: ${breakpoints.mobile}) {
     padding-left: 0px;
   }
 `;
