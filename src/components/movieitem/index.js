@@ -41,7 +41,7 @@ const MovieItemWrapper = styled.div`
   position: relative;
   background-color: white;
   border-radius: 3px;
-  margin: 15px auto;
+  margin: 0 auto 15px auto;
   padding: 20px;
   overflow: hidden;
 
@@ -98,6 +98,12 @@ const MovieTitle = styled.h3`
   margin: 0;
   grid-area: title;
   margin-inline-end: 2em;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  white-space: normal;
+  overflow: hidden;
 `;
 
 const MovieRating = styled.span`

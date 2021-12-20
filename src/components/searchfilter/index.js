@@ -13,6 +13,7 @@ export default class SearchFilters extends React.Component {
       <FiltersWrapper>
         <SearchFiltersCont className="search_inputs_cont" marginBottom>
           {/* Implement a "SearchBar" component and re-use it for the keyword and the year inputs */}
+          <SearchBar />
         </SearchFiltersCont>
         <SearchFiltersCont>
           <CategoryTitle>Movies</CategoryTitle>
