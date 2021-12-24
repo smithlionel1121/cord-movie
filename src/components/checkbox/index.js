@@ -30,6 +30,7 @@ const CheckboxInput = styled.input`
   height: 1.2em;
   width: 1.2em;
   border: 0.1em solid currentColor;
+  border: 0.1em solid ${colors.fontColor};
   border-radius: 0.2em;
   background-color: #fff;
 
