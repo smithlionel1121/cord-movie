@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-import * as colors from "../../colors";
 import * as fetcher from "../../fetcher";
 
 import SearchFilters from "../../components/searchfilter";
 import MovieList from "../../components/movielist";
+
+import stateReducer from "./reducer";
 
 export default class Discover extends React.Component {
   constructor(props) {
@@ -42,6 +43,10 @@ export default class Discover extends React.Component {
   }
 
   // Write a function to trigger the API request and load the search results based on the keyword and year given as parameters
+
+  reducer(action) {
+    this.setState(stateReducer(this.state, action));
+  }
 
   render() {
     const {
