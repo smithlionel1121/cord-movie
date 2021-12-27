@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import * as breakpoints from "../../breakpoints";
 import * as colors from "../../colors";
+import defaultPoster from "../../images/default-poster.png";
 
 export default class MovieItem extends React.Component {
   render() {
@@ -12,7 +13,11 @@ export default class MovieItem extends React.Component {
       <MovieItemWrapper>
         <LeftCont>
           <PosterImg
-            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            src={
+              movie.poster_path
+                ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                : defaultPoster
+            }
             alt="movie poster"
           />
         </LeftCont>
