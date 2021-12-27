@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
 
-import Checkbox from "../checkbox";
-
-export default function ExpandableFilter({ filters, filterLabel }) {
+export default function ExpandableFilter({ filterLabel, children }) {
   // You need to create your own checkbox component with a custom checkmark
   const [filtersShown, setFiltersShown] = useState(false);
 
@@ -36,11 +34,7 @@ export default function ExpandableFilter({ filters, filterLabel }) {
         id={`list-${id}`}
         aria-labelledby={`accordian-${id}`}
       >
-        {filters.map((filter) => (
-          <li key={filter.id}>
-            <Checkbox label={filter.name} />
-          </li>
-        ))}
+        {children}
       </FilterList>
     </>
   );

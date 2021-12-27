@@ -68,6 +68,7 @@ export default class Discover extends React.Component {
               ratings={ratingOptions}
               languages={languageOptions}
               searchMovies={(keyword, year) => this.searchMovies(keyword, year)}
+              dispatch={(action) => this.reducer(action)}
             />
           </MovieFilters>
         </MovieFiltersWrapper>

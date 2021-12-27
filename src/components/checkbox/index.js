@@ -7,11 +7,17 @@ export default class CheckBox extends React.Component {
   // Create a custom checkbox component
 
   render() {
-    const { label } = this.props;
+    const { filter, actionName, dispatch } = this.props;
+
     return (
       <CheckboxLabel>
-        <CheckboxInput type="checkbox" />
-        {label}
+        <CheckboxInput
+          type="checkbox"
+          onClick={() => dispatch({ type: actionName, payload: filter.name })}
+          checked={!!filter?.isFiltered}
+          readOnly
+        />
+        {filter.name}
       </CheckboxLabel>
     );
   }
