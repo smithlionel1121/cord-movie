@@ -42,6 +42,22 @@ export default class Discover extends React.Component {
     this.setState((state) => ({ ...state, results, totalCount, genreOptions }));
   }
 
+  async componentDidUpdate(_, prevState) {
+    if (this.state.results !== prevState.results) return;
+
+    const genreFilters = this.state.genreOptions
+      .filter((genre) => !!genre?.isFiltered)
+      .map((genre) => genre.id)
+      .join(",");
+
+    const { results, total_results: totalCount } =
+      await fetcher.getPopularMovies({
+        with_genres: genreFilters,
+      });
+
+    this.setState((state) => ({ ...state, results, totalCount }));
+  }
+
   // Write a function to trigger the API request and load the search results based on the keyword and year given as parameters
 
   reducer(action) {

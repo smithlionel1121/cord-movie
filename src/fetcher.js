@@ -10,6 +10,9 @@ apiURL.search = `api_key=${API_KEY}`;
 export async function getPopularMovies(params = null) {
   const url = new URL(apiURL);
   url.pathname += "discover/movie";
+
+  if (params) url.search = new URLSearchParams({ ...params, api_key: API_KEY });
+
   const res = await axios.get(url);
   return res.data;
 }
