@@ -10,10 +10,16 @@ const currentYear = new Date().getFullYear();
 
 export default class SearchBar extends React.Component {
   render() {
+    const { keyword, year, updateInput } = this.props;
     return (
       <>
         <SearchBarWrapper>
-          <InputBar type="search" />
+          <InputBar
+            type="search"
+            value={keyword}
+            onChange={updateInput}
+            name="keyword"
+          />
           <SearchBarIcon src={SearchIcon} />
         </SearchBarWrapper>
 
@@ -21,6 +27,9 @@ export default class SearchBar extends React.Component {
           <InputBar
             type="number"
             placeholder="Year of release"
+            value={year || ""}
+            onChange={updateInput}
+            name="year"
             min={startYear}
             max={currentYear}
           />
@@ -45,6 +54,11 @@ const InputBar = styled.input`
   outline: 0;
   font-size: 1.17em;
   font-weight: bold;
+
+  ::placeholder {
+    color: ${colors.primaryColor};
+    font-weight: 300;
+  }
 `;
 
 const SearchBarIcon = styled.img.attrs({ draggable: false })`

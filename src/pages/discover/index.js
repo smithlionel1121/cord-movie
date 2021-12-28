@@ -51,6 +51,9 @@ export default class Discover extends React.Component {
   }
 
   // Write a function to trigger the API request and load the search results based on the keyword and year given as parameters
+  updateInput = (e) => {
+    this.setState((state) => ({ ...state, [e.target.name]: e.target.value }));
+  };
 
   reducer(action) {
     this.setState(stateReducer(this.state, action));
@@ -63,6 +66,8 @@ export default class Discover extends React.Component {
       ratingOptions,
       totalCount,
       results,
+      keyword,
+      year,
     } = this.state;
 
     return (
@@ -75,7 +80,9 @@ export default class Discover extends React.Component {
               genres={genreOptions}
               ratings={ratingOptions}
               languages={languageOptions}
-              searchMovies={(keyword, year) => this.searchMovies(keyword, year)}
+              keyword={keyword}
+              year={year}
+              updateInput={this.updateInput}
               dispatch={(action) => this.reducer(action)}
             />
           </MovieFilters>

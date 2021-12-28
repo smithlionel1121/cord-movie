@@ -9,13 +9,12 @@ import { TOGGLE_GENRE_FILTER } from "../../pages/discover/actions";
 
 export default class SearchFilters extends React.Component {
   render() {
-    const { genres, dispatch } = this.props;
-
+    const { genres, keyword, year, updateInput, dispatch } = this.props;
     return (
       <FiltersWrapper>
         <SearchFiltersCont className="search_inputs_cont" marginBottom>
           {/* Implement a "SearchBar" component and re-use it for the keyword and the year inputs */}
-          <SearchBar />
+          <SearchBar keyword={keyword} year={year} updateInput={updateInput} />
         </SearchFiltersCont>
         <SearchFiltersCont>
           <CategoryTitle>Movies</CategoryTitle>
