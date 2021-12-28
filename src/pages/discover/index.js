@@ -45,15 +45,7 @@ export default class Discover extends React.Component {
   async componentDidUpdate(_, prevState) {
     if (this.state.results !== prevState.results) return;
 
-    const genreFilters = this.state.genreOptions
-      .filter((genre) => !!genre?.isFiltered)
-      .map((genre) => genre.id)
-      .join(",");
-
-    const { results, total_results: totalCount } =
-      await fetcher.getPopularMovies({
-        with_genres: genreFilters,
-      });
+    const { results, totalCount } = await fetcher.getFilteredMovies(this.state);
 
     this.setState((state) => ({ ...state, results, totalCount }));
   }

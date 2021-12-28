@@ -33,3 +33,18 @@ export async function getGenresAndPopularMovies() {
 
   return { results, totalCount, genreOptions };
 }
+
+export async function getFilteredMovies(filters) {
+  const { genreOptions } = filters;
+
+  const with_genres = genreOptions
+    .filter((genre) => !!genre?.isFiltered)
+    .map((genre) => genre.id)
+    .join(",");
+
+  const { results, total_results: totalCount } = await getPopularMovies({
+    with_genres,
+  });
+
+  return { results, totalCount };
+}
