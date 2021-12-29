@@ -1,56 +1,35 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import React from "react";
+import styled, { css } from "styled-components";
 
 import * as colors from "../../colors";
-import SearchIcon from "../../images/search-icon-yellow.png";
-import CalendarIcon from "../../images/year-icon.png";
+import * as breakpoints from "../../breakpoints";
 
-const startYear = 1900;
-const currentYear = new Date().getFullYear();
-
-export default function SearchBar({ keyword, year, updateInput }) {
-  const [validYear, setValidYear] = useState(true);
-
-  useEffect(() => {
-    setValidYear(!year || (startYear <= year && year <= currentYear));
-  }, [year]);
-
+export default function SearchBar({
+  icon,
+  mobile = false,
+  children,
+  ...inputProps
+}) {
   return (
     <>
-      <SearchBarWrapper>
-        <InputBar
-          type="search"
-          value={keyword}
-          onChange={updateInput}
-          name="keyword"
-          autoComplete="off"
-        />
-        <SearchBarIcon src={SearchIcon} />
+      <SearchBarWrapper mobile={mobile}>
+        <InputBar autoComplete="off" {...inputProps} />
+        <SearchBarIcon src={icon} />
       </SearchBarWrapper>
-
-      <SearchBarWrapper>
-        <InputBar
-          type="number"
-          placeholder="Year of release"
-          value={year || ""}
-          onChange={updateInput}
-          name="year"
-          min={startYear}
-          max={currentYear}
-        />
-        <SearchBarIcon src={CalendarIcon} />
-      </SearchBarWrapper>
-      {!validYear && (
-        <InputValidationMessage>
-          Please enter a year between {startYear} and {currentYear}
-        </InputValidationMessage>
-      )}
+      {children}
     </>
   );
 }
 
 const SearchBarWrapper = styled.div`
   position: relative;
+  ${(props) =>
+    !props.mobile &&
+    css`
+      @media only screen and (max-width: ${breakpoints.tablet}) {
+        display: none;
+      }
+    `}
 `;
 
 const InputBar = styled.input`
@@ -76,8 +55,4 @@ const SearchBarIcon = styled.img.attrs({ draggable: false })`
   top: 50%;
   left: 0;
   transform: translateY(-50%);
-`;
-
-const InputValidationMessage = styled.span`
-  color: red;
 `;
