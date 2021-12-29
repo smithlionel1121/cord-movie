@@ -48,3 +48,23 @@ export async function getFilteredMovies(filters) {
 
   return { results, totalCount };
 }
+
+export async function searchMovies(params) {
+  const url = new URL(apiURL);
+  url.pathname += "search/movie";
+
+  if (params) {
+    const { keyword: query, year } = params;
+
+    url.search = new URLSearchParams({
+      query,
+      ...(!!year && { year }),
+      api_key: API_KEY,
+    });
+  }
+
+  const res = await axios.get(url);
+  const { results, total_results: totalCount } = res.data;
+
+  return { results, totalCount };
+}

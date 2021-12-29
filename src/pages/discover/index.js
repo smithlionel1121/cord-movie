@@ -45,7 +45,17 @@ export default class Discover extends React.Component {
   async componentDidUpdate(_, prevState) {
     if (this.state.results !== prevState.results) return;
 
-    const { results, totalCount } = await fetcher.getFilteredMovies(this.state);
+    let results, totalCount;
+
+    if (
+      !!this.state.keyword &&
+      (this.state.keyword !== prevState.keyword ||
+        this.state.year !== prevState.year)
+    ) {
+      ({ results, totalCount } = await fetcher.searchMovies(this.state));
+    } else {
+      ({ results, totalCount } = await fetcher.getFilteredMovies(this.state));
+    }
 
     this.setState((state) => ({ ...state, results, totalCount }));
   }
