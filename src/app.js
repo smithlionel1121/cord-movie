@@ -15,16 +15,30 @@ export default class App extends React.Component {
     this.state = { sidebarOpen: false };
   }
 
+  toggleSidebar(isOpen) {
+    if (typeof isOpen === "boolean") {
+      this.setState({ sidebarOpen: isOpen });
+      return;
+    }
+
+    this.setState((state) => ({ sidebarOpen: !state.sidebarOpen }));
+  }
+
   render() {
     const { sidebarOpen } = this.state;
 
     return (
       <Router>
         <PageContainer>
-          <SideNavBar isOpen={sidebarOpen} />
+          <SideNavBar
+            isOpen={sidebarOpen}
+            toggleSidebar={(isOpen) => this.toggleSidebar(isOpen)}
+          />
           <ContentWrapper sidebarOpen={sidebarOpen}>
             <Switch>
-              <Route path="/discover" component={Discover} {...this.props} />
+              <Route path="/discover" {...this.props}>
+                <Discover toggleSidebar={() => this.toggleSidebar()} />
+              </Route>
             </Switch>
           </ContentWrapper>
         </PageContainer>

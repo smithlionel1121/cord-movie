@@ -87,7 +87,11 @@ export default class Discover extends React.Component {
       <DiscoverWrapper>
         <MobilePageTitle>
           <h1>
-            <HamburgerIcon src={Hamburger} alt="menu" />
+            <HamburgerIcon
+              src={Hamburger}
+              alt="menu"
+              onClick={this.props.toggleSidebar}
+            />
             Discover
           </h1>
         </MobilePageTitle>{" "}
@@ -179,6 +183,10 @@ const MobilePageTitle = styled.header`
 
   @media only screen and (max-width: ${breakpoints.tablet}) {
     display: block;
+
+    & h1 {
+      display: inline-flex;
+    }
   }
 `;
 
