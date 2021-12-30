@@ -50,6 +50,4 @@ const ContentWrapper = styled.main`
   }
 `;
 
-const PageContainer = styled.main`
-  overflow-x: hidden;
-`;
+const PageContainer = styled.main``;

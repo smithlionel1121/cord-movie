@@ -2,11 +2,14 @@ import React from "react";
 import styled from "styled-components";
 
 import * as fetcher from "../../fetcher";
+import * as breakpoints from "../../breakpoints";
 
 import SearchFilters from "../../components/searchfilter";
 import MovieList from "../../components/movielist";
 
 import stateReducer from "./reducer";
+
+import Hamburger from "../../images/hamburger.svg";
 
 export default class Discover extends React.Component {
   constructor(props) {
@@ -82,8 +85,12 @@ export default class Discover extends React.Component {
 
     return (
       <DiscoverWrapper>
-        <MobilePageTitle>Discover</MobilePageTitle>{" "}
-        {/* MobilePageTitle should become visible on small screens & mobile devices*/}
+        <MobilePageTitle>
+          <h1>
+            <HamburgerIcon src={Hamburger} alt="menu" />
+            Discover
+          </h1>
+        </MobilePageTitle>{" "}
         <MovieFiltersWrapper>
           <MovieFilters>
             <SearchFilters
@@ -109,12 +116,23 @@ export default class Discover extends React.Component {
 }
 
 const DiscoverWrapper = styled.main`
-  padding: 60px 35px;
+  padding: 35px 45px;
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 2fr 1fr;
   grid-template-rows: 1fr;
   gap: 0px 15px;
   grid-template-areas: "movie-results movie-filters-grid";
+
+  @media only screen and (max-width: ${breakpoints.tablet}) {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+  }
+`;
+
+const HamburgerIcon = styled.img`
+  height: 1em;
+  margin-right: 35px;
 `;
 
 const MoviesBaseCont = styled.div`
@@ -141,14 +159,27 @@ const MovieFiltersWrapper = styled(MoviesBaseCont)`
   grid-template-areas:
     "."
     "movie-filters";
+
+  @media only screen and (max-width: ${breakpoints.tablet}) {
+    display: block;
+  }
 `;
+
 const MovieFilters = styled(MoviesBaseCont)`
   grid-area: movie-filters;
+
+  @media only screen and (max-width: ${breakpoints.tablet}) {
+    display: block;
+  }
 `;
 
 const MobilePageTitle = styled.header`
   grid-area: mobile-title;
   display: none;
+
+  @media only screen and (max-width: ${breakpoints.tablet}) {
+    display: block;
+  }
 `;
 
 const MovieListWrapper = styled.div`

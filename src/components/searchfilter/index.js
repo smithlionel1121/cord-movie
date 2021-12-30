@@ -26,12 +26,12 @@ export default function SearchFilters({
     setValidYear(!year || (startYear <= year && year <= currentYear));
   }, [year]);
 
-    return (
-      <FiltersWrapper>
-        <SearchFiltersCont className="search_inputs_cont" marginBottom>
-          {/* Implement a "SearchBar" component and re-use it for the keyword and the year inputs */}
+  return (
+    <FiltersWrapper>
+      <SearchFiltersCont className="search_inputs_cont" mobile marginBottom>
+        {/* Implement a "SearchBar" component and re-use it for the keyword and the year inputs */}
         <SearchBar
-          type="search"
+          type="text"
           value={keyword}
           name="keyword"
           onChange={updateInput}
@@ -55,25 +55,25 @@ export default function SearchFilters({
             </InputValidationMessage>
           )}
         </SearchBar>
-        </SearchFiltersCont>
+      </SearchFiltersCont>
 
-        <SearchFiltersCont>
-          <CategoryTitle>Movies</CategoryTitle>
-          {/* Implement a component called "ExpandableFilter" and apply it to all filter categories */}
-          <ExpandableFilter filterLabel="Genre(s)">
-            {genres.map((filter) => (
-              <li key={filter.id}>
-                <CheckBox
-                  filter={filter}
-                  actionName={TOGGLE_GENRE_FILTER}
-                  dispatch={dispatch}
-                />
-              </li>
-            ))}
-          </ExpandableFilter>
-        </SearchFiltersCont>
-      </FiltersWrapper>
-    );
+      <SearchFiltersCont>
+        <CategoryTitle>Movies</CategoryTitle>
+        {/* Implement a component called "ExpandableFilter" and apply it to all filter categories */}
+        <ExpandableFilter filterLabel="Genre(s)">
+          {genres.map((filter) => (
+            <li key={filter.id}>
+              <CheckBox
+                filter={filter}
+                actionName={TOGGLE_GENRE_FILTER}
+                dispatch={dispatch}
+              />
+            </li>
+          ))}
+        </ExpandableFilter>
+      </SearchFiltersCont>
+    </FiltersWrapper>
+  );
 }
 
 const FiltersWrapper = styled.div`
@@ -85,6 +85,17 @@ const SearchFiltersCont = styled.div`
   padding: 20px;
   border-radius: 3px;
   transition: all 0.3s ease-in-out;
+
+  @media only screen and (max-width: ${breakpoints.tablet}) {
+    background-color: transparent;
+    padding: 20px 0;
+
+    ${(props) =>
+      !props.mobile &&
+      css`
+        display: none;
+      `}
+  }
 
   ${(props) =>
     props.marginBottom &&
