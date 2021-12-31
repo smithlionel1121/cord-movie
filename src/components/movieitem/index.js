@@ -56,7 +56,7 @@ const MovieItemWrapper = styled.div`
   gap: 0px 20px;
   grid-template-areas: "poster content";
 
-  @media only screen and (max-width: ${breakpoints.mobile}) {
+  @media only screen and (max-width: ${breakpoints.mobile_small}) {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     gap: 0px;
@@ -68,7 +68,7 @@ const LeftCont = styled.div`
   display: inline-block;
   grid-area: poster;
 
-  @media only screen and (max-width: ${breakpoints.mobile}) {
+  @media only screen and (max-width: ${breakpoints.mobile_small}) {
     display: none;
   }
 `;
