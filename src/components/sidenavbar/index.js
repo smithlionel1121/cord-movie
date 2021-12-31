@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 import { NavLink as Link } from "react-router-dom";
 
@@ -7,44 +7,58 @@ import * as breakpoints from "../../breakpoints";
 import Arrow from "../../images/arrow-icon.png";
 import SearchWhite from "../../images/search-icon-white.png";
 
-export default class SideNavBar extends React.Component {
+export default function SideNavBar({ isOpen, toggleSidebar }) {
   /* Write the necessary functions to show and hide the side bar on small devices */
+  const ref = useRef();
 
-  render() {
-    const { isOpen } = this.props;
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        toggleSidebar(false);
+      }
+    };
 
-    return (
-      <SideNavBarCont isOpen={isOpen}>
-        {/* Implement a hamburger icon slide in effect for small devices */}
-        <SideNavMainLink className="menu_nav_link main_nav_link" to="/" exact>
-          Wesley
-          <NavIcon src={Arrow} alt="dropdown arrow" />
-        </SideNavMainLink>
-        <SideNavMainLink className="menu_nav_link" to="/discover">
-          Discover
-          <NavIcon src={SearchWhite} alt="search icon" />
-        </SideNavMainLink>
-        <SideNavHeader>
-          <HeaderText>Watched</HeaderText>
-        </SideNavHeader>
-        <NavLink className="menu_nav_link" to="/watched/movies">
-          Movies
-        </NavLink>
-        <NavLink className="menu_nav_link" to="/watched/tv-shows">
-          Tv Shows
-        </NavLink>
-        <SideNavHeader>
-          <HeaderText>Saved</HeaderText>
-        </SideNavHeader>
-        <NavLink className="menu_nav_link" to="/saved/movies">
-          Movies
-        </NavLink>
-        <NavLink className="menu_nav_link" to="/saved/tv-shows">
-          Tv Shows
-        </NavLink>
-      </SideNavBarCont>
-    );
-  }
+    if (isOpen) {
+      document.addEventListener("click", handleClickOutside);
+    } else {
+      document.removeEventListener("click", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [isOpen, toggleSidebar]);
+
+  return (
+    <SideNavBarCont isOpen={isOpen} ref={ref}>
+      {/* Implement a hamburger icon slide in effect for small devices */}
+      <SideNavMainLink className="menu_nav_link main_nav_link" to="/" exact>
+        Wesley
+        <NavIcon src={Arrow} alt="dropdown arrow" />
+      </SideNavMainLink>
+      <SideNavMainLink className="menu_nav_link" to="/discover">
+        Discover
+        <NavIcon src={SearchWhite} alt="search icon" />
+      </SideNavMainLink>
+      <SideNavHeader>
+        <HeaderText>Watched</HeaderText>
+      </SideNavHeader>
+      <NavLink className="menu_nav_link" to="/watched/movies">
+        Movies
+      </NavLink>
+      <NavLink className="menu_nav_link" to="/watched/tv-shows">
+        Tv Shows
+      </NavLink>
+      <SideNavHeader>
+        <HeaderText>Saved</HeaderText>
+      </SideNavHeader>
+      <NavLink className="menu_nav_link" to="/saved/movies">
+        Movies
+      </NavLink>
+      <NavLink className="menu_nav_link" to="/saved/tv-shows">
+        Tv Shows
+      </NavLink>
+    </SideNavBarCont>
+  );
 }
 
 const SideNavBarCont = styled.div`
