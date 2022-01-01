@@ -3,12 +3,11 @@ import styled, { css } from "styled-components";
 
 import ExpandableFilter from "../../components/expandablefilter";
 import SearchBar from "../../components/searchbar";
-import CheckBox from "../checkbox";
 
 import * as breakpoints from "../../breakpoints";
 import SearchIcon from "../../images/search-icon-yellow.png";
 import CalendarIcon from "../../images/year-icon.png";
-import { TOGGLE_GENRE_FILTER } from "../../pages/discover/actions";
+import ExpandableFilterList from "../expandablefilterlist";
 
 const startYear = 1870;
 const currentYear = new Date().getFullYear() + 10;
@@ -61,15 +60,11 @@ export default function SearchFilters({
         <CategoryTitle>Movies</CategoryTitle>
         {/* Implement a component called "ExpandableFilter" and apply it to all filter categories */}
         <ExpandableFilter filterLabel="Genre(s)">
-          {genres.map((filter) => (
-            <li key={filter.id}>
-              <CheckBox
-                filter={filter}
-                actionName={TOGGLE_GENRE_FILTER}
+          <ExpandableFilterList
+            field="genreOptions"
+            list={genres}
                 dispatch={dispatch}
               />
-            </li>
-          ))}
         </ExpandableFilter>
       </SearchFiltersCont>
     </FiltersWrapper>
