@@ -11,18 +11,18 @@ export default function SearchBar({
   ...inputProps
 }) {
   return (
-    <>
-      <SearchBarWrapper mobile={mobile}>
+    <SearchBarWrapper mobile={mobile}>
+      <InputBarWrapper>
         <InputBar autoComplete="off" {...inputProps} />
         <SearchBarIcon src={icon} />
-      </SearchBarWrapper>
+      </InputBarWrapper>
+
       {children}
-    </>
+    </SearchBarWrapper>
   );
 }
 
 const SearchBarWrapper = styled.div`
-  position: relative;
   ${(props) =>
     !props.mobile &&
     css`
@@ -30,6 +30,10 @@ const SearchBarWrapper = styled.div`
         display: none;
       }
     `}
+`;
+
+const InputBarWrapper = styled.div`
+  position: relative;
 `;
 
 const InputBar = styled.input`
