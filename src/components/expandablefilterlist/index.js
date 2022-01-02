@@ -1,5 +1,5 @@
 import CheckBox from "../checkbox";
-import { TOGGLE_GENRE_FILTER } from "../../pages/discover/actions";
+import * as actionTypes from "../../pages/discover/actions";
 
 const ExpandableFilterList = ({ list, field, dispatch }) => {
   return list.map((filter) => (
@@ -9,8 +9,8 @@ const ExpandableFilterList = ({ list, field, dispatch }) => {
         checked={!!filter?.isFiltered}
         onChange={() =>
           dispatch({
-            type: TOGGLE_GENRE_FILTER,
-            payload: filter.name,
+            type: actionTypes.TOGGLE_FILTER,
+            payload: { name: filter.name, field },
           })
         }
       />

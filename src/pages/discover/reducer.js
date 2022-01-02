@@ -1,16 +1,15 @@
-import { TOGGLE_GENRE_FILTER } from "./actions";
+import * as actionTypes from "./actions";
 
 export default function reducer(state, action) {
   switch (action.type) {
-    case TOGGLE_GENRE_FILTER: {
-      const { genreOptions } = state;
-      const genreIndex = genreOptions.findIndex(
-        ({ name }) => name === action.payload
+    case actionTypes.TOGGLE_FILTER: {
+      const options = state[action.payload.field];
+      const optionIndex = options.findIndex(
+        ({ name }) => name === action.payload.name
       );
 
-      genreOptions[genreIndex].isFiltered =
-        !genreOptions[genreIndex]?.isFiltered;
-      return { ...state, genreOptions };
+      options[optionIndex].isFiltered = !options[optionIndex]?.isFiltered;
+      return { ...state, [action.payload.name]: options };
     }
     default:
       return state;
