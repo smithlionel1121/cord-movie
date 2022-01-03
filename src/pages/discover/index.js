@@ -11,6 +11,8 @@ import stateReducer from "./reducer";
 
 import Hamburger from "../../images/hamburger.svg";
 
+let controller;
+
 export default class Discover extends React.Component {
   constructor(props) {
     super(props);
@@ -35,32 +37,64 @@ export default class Discover extends React.Component {
         { id: "RU", name: "Russian" },
         { id: "PO", name: "Polish" },
       ],
+      isError: null,
     };
+
+    controller = new AbortController();
   }
 
   // Write a function to preload the popular movies when page loads & get the movie genres
   async componentDidMount() {
-    const { results, totalCount, genreOptions } =
-      await fetcher.getGenresAndPopularMovies();
-    this.setState((state) => ({ ...state, results, totalCount, genreOptions }));
+    try {
+      const { results, totalCount, genreOptions } =
+        await fetcher.getGenresAndPopularMovies(controller);
+      this.setState((state) => ({
+        ...state,
+        results,
+        totalCount,
+        genreOptions,
+        isError: false,
+      }));
+    } catch (err) {
+      this.handleError(err);
+    }
   }
 
   async componentDidUpdate(_, prevState) {
     if (this.state.results !== prevState.results) return;
 
-    let results, totalCount;
+    try {
+      let results, totalCount;
 
-    if (
-      !!this.state.keyword &&
-      (this.state.keyword !== prevState.keyword ||
-        this.state.year !== prevState.year)
-    ) {
-      ({ results, totalCount } = await fetcher.searchMovies(this.state));
-    } else {
-      ({ results, totalCount } = await fetcher.getFilteredMovies(this.state));
+      if (
+        !!this.state.keyword &&
+        (this.state.keyword !== prevState.keyword ||
+          this.state.year !== prevState.year)
+      ) {
+        ({ results, totalCount } = await fetcher.searchMovies(
+          controller,
+          this.state
+        ));
+      } else {
+        ({ results, totalCount } = await fetcher.getFilteredMovies(
+          controller,
+          this.state
+        ));
+      }
+
+      this.setState((state) => ({ ...state, results, totalCount }));
+    } catch (err) {
+      this.handleError(err);
     }
+  }
 
-    this.setState((state) => ({ ...state, results, totalCount }));
+  componentWillUnmount() {
+    controller.abort();
+  }
+
+  handleError(err) {
+    if (err.message !== "canceled")
+      this.setState((state) => ({ ...state, results: [], isError: true }));
   }
 
   // Write a function to trigger the API request and load the search results based on the keyword and year given as parameters
@@ -81,6 +115,7 @@ export default class Discover extends React.Component {
       results,
       keyword,
       year,
+      isError,
     } = this.state;
 
     return (
@@ -111,7 +146,11 @@ export default class Discover extends React.Component {
         <MovieResults>
           {totalCount > 0 && <TotalCounter>{totalCount} results</TotalCounter>}
           <MovieListWrapper>
-            <MovieList movies={results || []} genres={genreOptions || []} />
+            {isError ? (
+              <div>Something went wrong...</div>
+            ) : (
+              <MovieList movies={results || []} genres={genreOptions || []} />
+            )}
           </MovieListWrapper>
         </MovieResults>
       </DiscoverWrapper>
