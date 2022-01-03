@@ -10,7 +10,9 @@ import MovieList from "../../components/movielist";
 import stateReducer from "./reducer";
 
 import Hamburger from "../../images/hamburger.svg";
+import debounce from "../../utils/debounce";
 
+const DEBOUNCE_TIME = 50;
 let controller;
 
 export default class Discover extends React.Component {
@@ -45,6 +47,19 @@ export default class Discover extends React.Component {
 
   // Write a function to preload the popular movies when page loads & get the movie genres
   async componentDidMount() {
+    await this.loadGenresAndPopularMovies();
+  }
+
+  async componentDidUpdate(_, prevState) {
+    if (this.state.results !== prevState.results) return;
+    this.debouncedUpdateResults(prevState);
+  }
+
+  componentWillUnmount() {
+    controller.abort();
+  }
+
+  async loadGenresAndPopularMovies() {
     try {
       const { results, totalCount, genreOptions } =
         await fetcher.getGenresAndPopularMovies(controller);
@@ -60,9 +75,7 @@ export default class Discover extends React.Component {
     }
   }
 
-  async componentDidUpdate(_, prevState) {
-    if (this.state.results !== prevState.results) return;
-
+  updateResults = async (prevState) => {
     try {
       let results, totalCount;
 
@@ -86,11 +99,12 @@ export default class Discover extends React.Component {
     } catch (err) {
       this.handleError(err);
     }
-  }
+  };
 
-  componentWillUnmount() {
-    controller.abort();
-  }
+  debouncedUpdateResults = debounce(
+    (prevState) => this.updateResults(prevState),
+    DEBOUNCE_TIME
+  );
 
   handleError(err) {
     if (err.message !== "canceled")
