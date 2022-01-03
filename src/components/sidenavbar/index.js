@@ -69,7 +69,7 @@ const SideNavBarCont = styled.div`
   background-color: ${colors.sideNavBar};
   transition: transform 250ms ease-in;
 
-  @media only screen and (max-width: ${breakpoints.tablet}) {
+  @media only screen and (max-width: ${breakpoints.lg}) {
     ${(props) =>
       props.isOpen
         ? css`

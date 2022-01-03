@@ -26,7 +26,7 @@ const SearchBarWrapper = styled.div`
   ${(props) =>
     !props.mobile &&
     css`
-      @media only screen and (max-width: ${breakpoints.tablet}) {
+      @media only screen and (max-width: ${breakpoints.md}) {
         display: none;
       }
     `}

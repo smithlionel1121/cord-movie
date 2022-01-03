@@ -180,10 +180,19 @@ const DiscoverWrapper = styled.main`
   gap: 0px 15px;
   grid-template-areas: "movie-results movie-filters-grid";
 
-  @media only screen and (max-width: ${breakpoints.tablet}) {
+  @media only screen and (max-width: ${breakpoints.md}) {
     display: flex;
     flex-direction: column;
     padding: 0 20px;
+  }
+
+  @media only screen and (max-width: ${breakpoints.lg}) {
+    padding: 0 20px;
+    grid-template-rows: auto 1fr;
+    gap: 0px 15px;
+    grid-template-areas:
+      "mobile-title mobile-title"
+      "movie-results movie-filters-grid";
   }
 `;
 
@@ -217,7 +226,7 @@ const MovieFiltersWrapper = styled(MoviesBaseCont)`
     "."
     "movie-filters";
 
-  @media only screen and (max-width: ${breakpoints.tablet}) {
+  @media only screen and (max-width: ${breakpoints.md}) {
     display: block;
   }
 `;
@@ -225,7 +234,7 @@ const MovieFiltersWrapper = styled(MoviesBaseCont)`
 const MovieFilters = styled(MoviesBaseCont)`
   grid-area: movie-filters;
 
-  @media only screen and (max-width: ${breakpoints.tablet}) {
+  @media only screen and (max-width: ${breakpoints.md}) {
     display: block;
   }
 `;
@@ -234,7 +243,7 @@ const MobilePageTitle = styled.header`
   grid-area: mobile-title;
   display: none;
 
-  @media only screen and (max-width: ${breakpoints.tablet}) {
+  @media only screen and (max-width: ${breakpoints.lg}) {
     display: block;
 
     & h1 {

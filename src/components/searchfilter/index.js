@@ -63,8 +63,8 @@ export default function SearchFilters({
           <ExpandableFilterList
             field="genreOptions"
             list={genres}
-                dispatch={dispatch}
-              />
+            dispatch={dispatch}
+          />
         </ExpandableFilter>
       </SearchFiltersCont>
     </FiltersWrapper>
@@ -81,7 +81,7 @@ const SearchFiltersCont = styled.div`
   border-radius: 3px;
   transition: all 0.3s ease-in-out;
 
-  @media only screen and (max-width: ${breakpoints.tablet}) {
+  @media only screen and (max-width: ${breakpoints.md}) {
     background-color: transparent;
     padding: 20px 0;
 
