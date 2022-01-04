@@ -34,10 +34,13 @@ export default class Discover extends React.Component {
         { id: 10, name: 10 },
       ],
       languageOptions: [
-        { id: "GR", name: "Greek" },
-        { id: "EN", name: "English" },
-        { id: "RU", name: "Russian" },
-        { id: "PO", name: "Polish" },
+        { id: "en", name: "English" },
+        { id: "el", name: "Greek" },
+        { id: "ru", name: "Russian" },
+        { id: "pl", name: "Polish" },
+        { id: "es", name: "Spanish" },
+        { id: "pt", name: "Portuguese" },
+        { id: "fr", name: "French" },
       ],
       isError: null,
     };
@@ -95,7 +98,12 @@ export default class Discover extends React.Component {
         ));
       }
 
-      this.setState((state) => ({ ...state, results, totalCount }));
+      this.setState((state) => ({
+        ...state,
+        results,
+        totalCount,
+        isError: false,
+      }));
     } catch (err) {
       this.handleError(err);
     }
@@ -107,8 +115,11 @@ export default class Discover extends React.Component {
   );
 
   handleError(err) {
-    if (err.message !== "canceled")
+    if (err.message !== "canceled") {
       this.setState((state) => ({ ...state, results: [], isError: true }));
+    } else {
+      throw err;
+    }
   }
 
   // Write a function to trigger the API request and load the search results based on the keyword and year given as parameters

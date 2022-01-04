@@ -7,11 +7,11 @@ export default class CheckBox extends React.Component {
   // Create a custom checkbox component
 
   render() {
-    const { label, ...inputProps } = this.props;
+    const { label, radio = false, ...inputProps } = this.props;
 
     return (
       <CheckboxLabel>
-        <CheckboxInput type="checkbox" {...inputProps} />
+        <CheckboxInput circle={radio} type="checkbox" {...inputProps} />
         {label}
       </CheckboxLabel>
     );
@@ -33,6 +33,8 @@ const CheckboxInput = styled.input`
   border: 0.1em solid currentColor;
   border: 0.1em solid ${colors.fontColor};
   border-radius: 0.2em;
+  border-radius: 50%;
+  border-radius: ${(props) => (props.circle ? "50%" : "0.2em")};
   background-color: #fff;
 
   display: grid;

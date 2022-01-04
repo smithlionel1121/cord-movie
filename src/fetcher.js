@@ -60,16 +60,23 @@ export async function getGenresAndPopularMovies(controller) {
 
 export async function getFilteredMovies(controller, filters) {
   try {
-    const { genreOptions } = filters;
+    const { genreOptions, languageOptions, ratingOptions, year } = filters;
 
     const with_genres = genreOptions
       .filter((genre) => !!genre?.isFiltered)
       .map((genre) => genre.id)
       .join(",");
+    const language = languageOptions.find((language) => language?.isFiltered);
+    const rating = ratingOptions.find((rating) => rating?.isFiltered);
 
     const { results, total_results: totalCount } = await getPopularMovies(
       controller,
-      { with_genres }
+      {
+        with_genres,
+        ...(language && { language: language.id }),
+        ...(rating && { "vote_average.gte": rating.id }),
+        ...(year && { year }),
+      }
     );
 
     return { results, totalCount };

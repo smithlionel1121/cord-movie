@@ -14,6 +14,8 @@ const currentYear = new Date().getFullYear() + 10;
 
 export default function SearchFilters({
   genres,
+  ratings,
+  languages,
   keyword,
   year,
   updateInput,
@@ -63,6 +65,23 @@ export default function SearchFilters({
           <ExpandableFilterList
             field="genreOptions"
             list={genres}
+            radio={false}
+            dispatch={dispatch}
+          />
+        </ExpandableFilter>
+        <ExpandableFilter filterLabel="min. vote">
+          <ExpandableFilterList
+            field="ratingOptions"
+            list={ratings}
+            radio={true}
+            dispatch={dispatch}
+          />
+        </ExpandableFilter>
+        <ExpandableFilter filterLabel="Language">
+          <ExpandableFilterList
+            field="languageOptions"
+            list={languages}
+            radio={true}
             dispatch={dispatch}
           />
         </ExpandableFilter>

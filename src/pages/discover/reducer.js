@@ -3,13 +3,19 @@ import * as actionTypes from "./actions";
 export default function reducer(state, action) {
   switch (action.type) {
     case actionTypes.TOGGLE_FILTER: {
-      const options = state[action.payload.field];
-      const optionIndex = options.findIndex(
-        ({ name }) => name === action.payload.name
-      );
+      const { field, name, radio } = action.payload;
+
+      const options = state[field];
+      const optionIndex = options.findIndex((option) => option.name === name);
+
+      if (radio) {
+        options.forEach((option, index) => {
+          if (optionIndex !== index) option.isFiltered = false;
+        });
+      }
 
       options[optionIndex].isFiltered = !options[optionIndex]?.isFiltered;
-      return { ...state, [action.payload.name]: options };
+      return { ...state, [name]: options };
     }
     default:
       return state;

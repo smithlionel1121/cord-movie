@@ -83,7 +83,6 @@ const RightCont = styled.div`
 
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: min-content 5% 1fr 5%;
   grid-template-rows: min-content min-content minmax(0, 1fr) min-content;
   gap: 0px 0px;
   grid-template-areas:
